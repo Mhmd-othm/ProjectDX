@@ -361,3 +361,19 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Add to your existing .gitignore
+echo "" >> .gitignore
+echo "# DirectX SDK (too large, install via official SDK)" >> .gitignore
+echo "Engine/Vendors/DirectX-SDK/" >> .gitignore
+echo "" >> .gitignore
+echo "# Build outputs" >> .gitignore
+echo "Engine/Debug/" >> .gitignore
+echo "Engine/Release/" >> .gitignore
+echo "Engine/x64/" >> .gitignore
+echo "ProjectDX/Debug/" >> .gitignore
+echo "ProjectDX/Release/" >> .gitignore
+echo "ProjectDX/x64/" >> .gitignore
+echo "" >> .gitignore
+echo "# Spdlog build" >> .gitignore
+echo "Engine/Vendors/Spdlog/build/" >> .gitignore
