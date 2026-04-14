@@ -1,8 +1,12 @@
 #include "Window.h"
-
+#include "Logger.h"
+#include "Graphics.h"
+#include "Game.h"
 DLL_API std::unique_ptr<Window> 
   Window::TheWindowInstance;
-
+Window::Window() : hWnd(nullptr) {
+	Logger::Initialize();
+}
 Window::~Window()
 {
 
@@ -40,9 +44,21 @@ bool Window::Initialize(const char* name, int width, int height)
 		return false;
 
 	ShowWindow(hWnd, SW_SHOW);
-	UpdateWindow(hWnd);
 	ShowCursor(SW_SHOW);
 	BringWindowToTop(hWnd);
+
+	DX_INFO("The window has been successfully initialized!");
+
+
+	try {
+		gfx = std::make_shared<Graphics>(hWnd, width, height);
+		game = std::make_unique<Game>(gfx);
+
+		game->BeginPlay();
+	}
+	catch (std::exception& e) {
+		DX_FATAL(e.what());
+	}
 	return true;
 }
 
@@ -61,6 +77,10 @@ void Window::MessageLoop()
 		else
 		{
 			// Render our scene!
+			gfx->BeginFrame();
+			gfx->RenderObjects();
+			game->Update(0);
+			gfx->EndFrame();
 		}
 	}
 }

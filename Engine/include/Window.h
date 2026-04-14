@@ -9,11 +9,15 @@
 #define DLL_API __declspec(dllimport)
 #endif // ENGINE_EXPORT
 
-DLL_API class Window
+
+class Graphics;
+class Game;
+
+class DLL_API Window
 {
 public:
 	Window& operator=(const Window&) = delete;
-	DLL_API ~Window();
+	~Window();
 	inline static Window& getInstance() {
 		if (TheWindowInstance == nullptr) {
 			TheWindowInstance = std::make_unique<Window>();
@@ -21,16 +25,18 @@ public:
 		return *TheWindowInstance;
 	};
 
-	DLL_API bool Initialize(const char* name, int width, int height);
-	DLL_API void MessageLoop();
+	bool Initialize(const char* name, int width, int height);
+	void MessageLoop();
 	static LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, 
 		WPARAM wParam, LPARAM lParam);
 private:
-	Window() {}
+	Window();
 	HWND hWnd;
 
-	DLL_API static std::unique_ptr<Window> TheWindowInstance;
-	DLL_API friend std::unique_ptr<Window> std::make_unique<Window>();
+	static std::unique_ptr<Window> TheWindowInstance;
+	friend std::unique_ptr<Window> std::make_unique<Window>();
 
+	std::shared_ptr<Graphics> gfx;
+	std::unique_ptr<Game> game;
 };
 
