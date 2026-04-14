@@ -16,13 +16,21 @@ Game::~Game()
 void Game::BeginPlay()
 {
 
-	Mesh* triangleMesh = new Mesh({
-			{ 0.0f, 0.5f, 0.0f },
-			{ 0.45f, -0.5f, 0.0f },
-			{ -0.45f, -0.5f, 0.0f }
+	Mesh* RectangleMesh = new Mesh(
+		{
+			{ -0.5f, 0.5f, 0.0f },
+			{ 0.5f, 0.5f, 0.0f },
+			{ 0.5f, -0.5f, 0.0f },
+			{ -0.5f, -0.5f, 0.0f }
+
+		},
+		{
+			0,1,2,
+			0,2,3
+
 		});
 
-	gfx->RegisterObject(std::make_shared<Object>("Triangle", triangleMesh));
+	gfx->RegisterObject(std::make_shared<Object>("Triangle", RectangleMesh));
 }
 
 void Game::Update(float dt)

@@ -14,7 +14,7 @@ Object::~Object()
 }
 bool Object::Initialize(ID3D11Device* device) {
 	if (shader) {
-		if (!shader->CreateVertexShader(device, L"../Engine/Shaders/BasicShader.hlsl")) {
+		if (!shader->CreateVertexShader(device, L"../Engine/Shaders/BasicShader.hlsl ")) {
 			return false;
 		}
 		if (!shader->CreatePixelShader(device, L"../Engine/Shaders/BasicShader.hlsl")) {
